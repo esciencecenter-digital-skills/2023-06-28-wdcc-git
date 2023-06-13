@@ -61,87 +61,6 @@ remember to uncomment the `pilot_lesson_site` field in `_config.yml`
 </div>
 {% endcomment %}
 
-{% comment %}
-8< ============================= until here ==================
-{% endcomment %}
-
-{% comment %}
-Check carpentry
-{% endcomment %}
-
-{% if info.carpentry == "FIXME" %}
-<div class="alert alert-warning">
-It looks like you are setting up a website for a workshop but you haven't specified the carpentry type in the <code>_data/data.csv</code> file (current value in <code>_data/data.csv</code>: "<strong>{{ info.carpentry }}</strong>", possible values: <code>swc</code>, <code>dc</code>, <code>lc</code>, <code>cp</code>, <code>ds</code>, or <code>pilot</code>). After editing this file, you need to run <code>make serve</code> again to see the changes reflected.
-</div>
-{% endif %}
-
-{% comment %}
-Read correct lesson meta from esciencecenter-digital-skills/workshop-metadata
-{% endcomment %}
-
-
-{% if info.flavor and info.flavor != 'NA' %}
-{% capture lesson_meta %}https://raw.githubusercontent.com/esciencecenter-digital-skills/workshop-metadata/main/{{info.curriculum}}-{{info.flavor}}{% endcapture %}
-{% else %}
-{% capture lesson_meta %}https://raw.githubusercontent.com/esciencecenter-digital-skills/workshop-metadata/main/{{info.curriculum}}{% endcapture %}
-{% endif %}
-
-{% comment %}
-Check DC curriculum
-{% endcomment %}
-
-{% if info.carpentry == "dc" %}
-{% unless info.curriculum == "dc-astronomy" or info.curriculum == "dc-ecology" or info.curriculum == "dc-genomics" or info.curriculum == "dc-socsci" or info.curriculum == "dc-image-processing" %}
-<div class="alert alert-warning">
-It looks like you are setting up a website for a Data Carpentry curriculum but you haven't specified the curriculum type in the <code>_data/data.csv</code> file (current value in <code>_data/data.csv</code>: "<strong>{{ info.curriculum }}</strong>", possible values: <code>dc-astronomy</code>, <code>dc-ecology</code>, <code>dc-genomics</code>, <code>dc-socsci</code>, or <code>dc-geospatial</code>). After editing this file, you need to run <code>make serve</code> again to see the changes reflected.
-</div>
-{% endunless %}
-{% endif %}
-{% comment %}
-Check SWC curriculum
-{% endcomment %}
-
-{% if info.carpentry == "swc" %}
-{% unless info.curriculum == "swc-inflammation" or info.curriculum == "swc-gapminder" %}
-<div class="alert alert-warning">
-It looks like you are setting up a website for a Software Carpentry curriculum but you haven't specified the curriculum type in the <code>_data/data.csv</code> file (current value in <code>_data/data.csv</code>: "<strong>{{ info.curriculum }}</strong>", possible values: <code>swc-inflammation</code>, or <code>swc-gapminder</code>). After editing this file, you need to run <code>make serve</code> again to see the changes reflected.
-</div>
-{% endunless %}
-{% endif %}
-
-{% comment %}
-Check DS curriculum
-{% endcomment %}
-
-{% if info.carpentry == "ds" %}
-{% unless info.curriculum == "ds-cr" or info.curriculum == "ds-docker" or info.curriculum == "ds-dl-intro" or info.curriculum == "ds-gpu" or info.curriculum == "ds-parallel" or info.curriculum == "ds-rpackaging" or info.curriculum == "ds-geospatial"%}
-<div class="alert alert-warning">
-It looks like you are setting up a website for a Digital Skills curriculum but you haven't specified the curriculum type in the <code>_data/data.csv</code> file (current value in <code>_data/data.csv</code>: "<strong>{{ info.curriculum }}</strong>", possible values: <code>ds-cr</code>, <code>ds-docker</code>, <code>ds-dl-intro</code>, <code>ds-gpu</code>, <code>ds-parallel</code> or <code>ds-rpackaging</code>). After editing this file, you need to run <code>make serve</code> again to see the changes reflected.
-</div>
-{% endunless %}
-{% endif %}
-
-{% comment %}
-EVENTBRITE
-
-This block includes the Eventbrite registration widget if
-'eventbrite' has been set in the header.  You can delete it if you
-are not using Eventbrite, or leave it in, since it will not be
-displayed if the 'eventbrite' field in the header is not set.
-{% endcomment %}
-{% if eventbrite %}
-<strong>Some adblockers block the registration window. If you do not see the
-  registration box below, please check your adblocker settings.</strong>
-<iframe
-  src="https://www.eventbrite.com/tickets-external?eid={{eventbrite}}&ref=etckt"
-  frameborder="0"
-  width="100%"
-  height="280px"
-  scrolling="auto">
-</iframe>
-{% endif %}
-
-
 <h2 id="general">General Information</h2>
 
 {% comment %}
@@ -150,16 +69,7 @@ INTRODUCTION
 Edit the general explanatory paragraph below if you want to change
 the pitch.
 {% endcomment %}
-{% if info.carpentry == "swc" %}
-{% include swc/intro.html %}
-{% elsif info.carpentry == "dc" %}
-{% include dc/intro.html %}
-{% elsif info.carpentry == "lc" %}
-{% include lc/intro.html %}
-{% elsif info.carpentry == "ds" %}
-{% include ds/intro.md %}
-{% remote_include {{lesson_meta}}/description.md %}
-{% endif %}
+The key objective of this workshop is to grow researchers' ability to collaborate using Git and GitLab.
 
 {% comment %}
 AUDIENCE
@@ -167,57 +77,7 @@ AUDIENCE
 Explain who your audience is.  (In particular, tell readers if the
 workshop is only open to people from a particular institution.
 {% endcomment %}
-{% if info.carpentry == "swc" %}
-{% include swc/who.html %}
-{% elsif info.carpentry == "dc" %}
-{% include dc/who.html %}
-{% elsif info.carpentry == "lc" %}
-{% include lc/who.html %}
-{% elsif info.carpentry == "ds" %}
-<div style="display: flex"><div>
-     <strong>Who:&nbsp;</strong>
-     </div>
-     <div markdown=1>{% remote_include {{lesson_meta}}/who.md %}</div></div>
-{% endif %}
-
-{% comment %}
-LOCATION
-
-This block displays the address and links to maps showing directions
-if the latitude and longitude of the workshop have been set.  You
-can use https://itouchmap.com/latlong.html to find the lat/long of an
-address.
-{% endcomment %}
-{% assign begin_address = info.address | slice: 0, 4 | downcase  %}
-{% if info.address == "online" %}
-{% assign online = "true_private" %}
-{% elsif begin_address contains "http" %}
-{% assign online = "true_public" %}
-{% else %}
-{% assign online = "false" %}
-{% endif %}
-{% if info.latitude and info.longitude and online == "false" %}
-<p id="where">
-  <strong>Where:</strong>
-  {{info.address}}.
-  Get directions with
-  <a href="//www.openstreetmap.org/?mlat={{info.latitude}}&mlon={{info.longitude}}&zoom=16">OpenStreetMap</a>
-  or
-  <a href="//maps.google.com/maps?q={{info.latitude}},{{info.longitude}}">Google Maps</a>.
-</p>
-{% elsif online == "true_public" %}
-<p id="where">
-  <strong>Where:</strong>
-  online at <a href="{{info.address}}">{{info.address}}</a>.
-  If you need a password or other information to access the training,
-  the instructor will pass it on to you before the workshop.
-</p>
-{% elsif online == "true_private" %}
-<p id="where">
-  <strong>Where:</strong> This training will take place online.
-  The instructors will provide you with the information you will need to connect to this meeting.
-</p>
-{% endif %}
+This workshop is only open to people from Wageningen Data Competence Center
 
 {% comment %}
 DATE
@@ -234,6 +94,11 @@ This block displays the date and time.
   {% endif %}
 </p>
 {% endif %}
+
+<p id="where">
+  <strong>Where:</strong>
+  Wageningen University, building + room to be announced
+</p>
 
 {% comment %}
 SPECIAL REQUIREMENTS
@@ -252,36 +117,11 @@ Modify the block below if there are any special requirements.
   They should have a few specific software packages installed (listed <a href="#setup">below</a>).
 </p>
 
-{% comment %}
-ACCESSIBILITY
-
-Modify the block below if there are any barriers to accessibility or
-special instructions.
-{% endcomment %}
-<p id="accessibility">
-  <strong>Accessibility:</strong>
-{% if online == "false" %}
-  We are committed to making this workshop
-  accessible to everybody. The workshop organizers have checked that:
+<p id="prerequisites">
+<strong>Prerequisites:</strong>
+It is assumed that participants already write code for their research, but no expertise is required. 
+Some experience in navigating file trees and editing files in a terminal session is recommended.
 </p>
-<ul>
-  <li>The room is wheelchair / scooter accessible.</li>
-  <li>Accessible restrooms are available.</li>
-</ul>
-<p>
-  Materials will be provided in advance of the workshop and
-  large-print handouts are available if needed by notifying the
-  organizers in advance.  If we can help making learning easier for
-  you (e.g. sign-language interpreters, lactation facilities) please
-  get in touch (using contact details below) and we will
-  attempt to provide them.
-</p>
-{% else %}
-  We are dedicated to providing a positive and accessible learning environment for all. Please
-  notify the instructors in advance of the workshop if you require any accommodations or if there is
-  anything we can do to make this workshop more accessible to you.
-</p>
-{% endif %}
 
 {% comment %}
 CONTACT EMAIL ADDRESS
@@ -294,7 +134,6 @@ Display the contact email address set in the configuration file.
   {% if site.email %}
   {% for email in site.email %}
   {% if forloop.last and site.email.size > 1 %}
-  or
   {% else %}
   {% unless forloop.first %}
   ,
@@ -406,29 +245,42 @@ of code below the Schedule `<h2>` header below with
 `{% include custom-schedule.html %}`.
 {% endcomment %}
 
-{% if info.carpentry == "ds" %}
 <h2 id="syllabus">Syllabus</h2>
-{% remote_include {{lesson_meta}}/syllabus.md %}
-{% endif %}
+* Introduction to version control with Git
+* Tracking changes
+* Exploring history
+* Ignoring things
+* GitLab remotes
+* Conflicts
+* Centralized workflow with Git and GitLab
+* Distributed workflow with Git and GitLab
 
 <h2 id="schedule">Schedule</h2>
 
-{% if info.carpentry == "swc" %}
-{% include swc/schedule.html %}
-{% elsif info.carpentry == "dc" %}
-{% include dc/schedule.html %}
-{% elsif info.carpentry == "lc" %}
-{% include lc/schedule.html %}
-{% elsif info.carpentry == "ds" %}
-{% remote_include {{lesson_meta}}/schedule.md %}
-{% elsif info.carpentry == "pilot" %}
-The lesson taught in this workshop is being piloted and a precise schedule is yet to be established. The workshop will include regular breaks. If you would like to know the timing of these breaks in advance, please [contact the workshop organisers](#contact). For a list of lesson sections and estimated timings, [visit the lesson homepage]({{ site.lesson_site }}).
-{% comment %}
-Edit/replace the text above if you want to include a schedule table.
-See the contents of the _includes/custom-schedule.html file for an example of
-how one of these schedule tables is constructed.
-{% endcomment %}
-{% endif %}
+<div class="row">    
+  <div class="col-md-6">
+    <table class="table table-striped">
+      <tbody>
+      <tr> <td>09:30</td> <td>Welcome and icebreaker </td> </tr>
+      <tr> <td>09:45</td>  <td>Introduction to version control with Git </td> </tr>
+      <tr> <td>10:30</td>  <td>Coffee break</td> </tr>
+      <tr> <td>10:40</td>  <td>Tracking changes and exploring history </td> </tr>
+      <tr> <td>11:30</td>  <td>Coffee break</td> </tr>
+      <tr> <td>11:40</td>  <td>Ignoring things, remotes, and conflicts </td> </tr>
+      <tr> <td>12:30</td>  <td>Lunch</td> </tr>
+      <tr> <td>13:30</td>  <td>Centralized workflow with Git and GitLab</td> </tr>
+      <tr> <td>14:30</td>  <td>Coffee break</td> </tr>
+      <tr> <td>14:40</td>  <td>Distributed workflow with Git and GitLab</td> </tr>
+      <tr> <td>15:30</td>  <td>Coffee break</td> </tr>
+      <tr> <td>15:40</td>  <td>Distributed workflow with Git and GitLab</td> </tr>
+      <tr> <td>16:15</td>  <td>Wrap-up</td> </tr>
+      <tr> <td>16:30</td>  <td>Questions and discussions</td> </tr>
+      <tr> <td>17:00</td>  <td>END</td> </tr>
+    </tbody></table>
+  </div>
+</div>
+
+
 
 <hr/>
 
@@ -472,44 +324,13 @@ please preview your site before committing, and make sure to run
 These are the installation instructions for the tools used
 during the workshop.
 {% endcomment %}
-
+<h3 id="computer">Computer</h3>
+  <p>Participants must work on a computer with a Mac, Linux, or Windows operating system (not a tablet, Chromebook, etc.) on which they have administrative privileges.</p>
+  
 <h3 id="software-setup">Software setup</h3>
-
-{% if info.carpentry == "swc" %}
-{% include swc/setup.html %}
-{% elsif info.carpentry == "dc" %}
-{% include dc/setup.html %}
-{% elsif info.carpentry == "lc" %}
-{% include lc/setup.html %}
-{% elsif info.carpentry == "ds" %}
-{% capture content %}
-{% remote_include {{lesson_meta}}/setup.md %}
-{% endcapture %}
-{% if content contains "/setup.md" %}
-  {% capture setup %}
-  {% remote_include https://raw.githubusercontent.com/{{content | strip}} %}
-  {% endcapture %}
-  {{ setup | split: "---" | last}}
-{% else %}
-  {{ content }}
-{% endif %}
-{% elsif info.carpentry == "pilot" %}
-Please check the "Setup" page of
-[the lesson site]({{ site.lesson_site }}) for instructions to follow
-to obtain the software and data you will need to follow the lesson.
-{% endif %}
-
-{% comment %}
-For online workshops, the section below provides:
-- installation instructions for the Zoom client
-- recommendations for setting up Learners' workspace so they can follow along
-  the instructions and the videoconferencing
-
-If you do not use Zoom for your online workshop, edit the file
-`_includes/install_instructions/videoconferencing.html`
-to include the relevant installation instrucctions.
-{% endcomment %}
-{% if online != "false" %}
-{% include install_instructions/videoconferencing.html %}
-{% endif %}
-
+<p>To participate in this workshop, you will need to prepare the following (if you haven’t already):</p>
+<ul>
+  <li>Install Shell and Git. Please refer to <a href="https://coderefinery.github.io/installation/shell-and-git/">this page</a> for installation instructions.</li>
+  <li>Create a GitLab account. Please refer to <a href="https://gitlab.com/users/sign_up">this page</a> for instructions.</li>
+  <li>Set up an SSH connection to GitLab. First <a href="https://docs.gitlab.com/ee/user/ssh.html#see-if-you-have-an-existing-ssh-key-pair">check if you have an ssh key</a>. Then create an SSH key pair if you don't have one, please refer to <a href="https://docs.gitlab.com/ee/user/ssh.html#generate-an-ssh-key-pair">this page</a> for instructions. Then add the SSH key to your GitLab account following <a href="https://docs.gitlab.com/ee/user/ssh.html#add-an-ssh-key-to-your-gitlab-account">these instructions</a></li>
+</ul>

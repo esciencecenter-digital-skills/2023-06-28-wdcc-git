@@ -261,10 +261,10 @@ of code below the Schedule `<h2>` header below with
   <div class="col-md-6">
     <table class="table table-striped">
       <tbody>
-      <tr> <td>09:30</td> <td>Welcome and icebreaker </td> </tr>
-      <tr> <td>09:45</td>  <td>Introduction to version control with Git </td> </tr>
-      <tr> <td>10:30</td>  <td>Coffee break</td> </tr>
-      <tr> <td>10:40</td>  <td>Tracking changes and exploring history </td> </tr>
+      <tr> <td>09:00</td> <td>Welcome and icebreaker </td> </tr>
+      <tr> <td>09:15</td>  <td>Introduction to version control with Git </td> </tr>
+      <tr> <td>10:20</td>  <td>Coffee break</td> </tr>
+      <tr> <td>10:30</td>  <td>Tracking changes and exploring history </td> </tr>
       <tr> <td>11:30</td>  <td>Coffee break</td> </tr>
       <tr> <td>11:40</td>  <td>Ignoring things, remotes, and conflicts </td> </tr>
       <tr> <td>12:30</td>  <td>Lunch</td> </tr>

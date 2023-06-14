@@ -261,10 +261,10 @@ of code below the Schedule `<h2>` header below with
   <div class="col-md-6">
     <table class="table table-striped">
       <tbody>
-      <tr> <td>09:30</td> <td>Welcome and icebreaker </td> </tr>
-      <tr> <td>09:45</td>  <td>Introduction to version control with Git </td> </tr>
-      <tr> <td>10:30</td>  <td>Coffee break</td> </tr>
-      <tr> <td>10:40</td>  <td>Tracking changes and exploring history </td> </tr>
+      <tr> <td>09:00</td> <td>Welcome and icebreaker </td> </tr>
+      <tr> <td>09:15</td>  <td>Introduction to version control with Git </td> </tr>
+      <tr> <td>10:20</td>  <td>Coffee break</td> </tr>
+      <tr> <td>10:30</td>  <td>Tracking changes and exploring history </td> </tr>
       <tr> <td>11:30</td>  <td>Coffee break</td> </tr>
       <tr> <td>11:40</td>  <td>Ignoring things, remotes, and conflicts </td> </tr>
       <tr> <td>12:30</td>  <td>Lunch</td> </tr>
@@ -274,8 +274,7 @@ of code below the Schedule `<h2>` header below with
       <tr> <td>15:30</td>  <td>Coffee break</td> </tr>
       <tr> <td>15:40</td>  <td>Distributed workflow with Git and GitLab</td> </tr>
       <tr> <td>16:15</td>  <td>Wrap-up</td> </tr>
-      <tr> <td>16:30</td>  <td>Questions and discussions</td> </tr>
-      <tr> <td>17:00</td>  <td>END</td> </tr>
+      <tr> <td>16:30</td>  <td>END</td> </tr>
     </tbody></table>
   </div>
 </div>
@@ -332,5 +331,5 @@ during the workshop.
 <ul>
   <li>Install Shell and Git. Please refer to <a href="https://coderefinery.github.io/installation/shell-and-git/">this page</a> for installation instructions.</li>
   <li>Create a GitLab account. Please refer to <a href="https://gitlab.com/users/sign_up">this page</a> for instructions.</li>
-  <li>Set up an SSH connection to GitLab. First <a href="https://docs.gitlab.com/ee/user/ssh.html#see-if-you-have-an-existing-ssh-key-pair">check if you have an ssh key</a>. Then create an SSH key pair if you don't have one, please refer to <a href="https://docs.gitlab.com/ee/user/ssh.html#generate-an-ssh-key-pair">this page</a> for instructions. Then add the SSH key to your GitLab account following <a href="https://docs.gitlab.com/ee/user/ssh.html#add-an-ssh-key-to-your-gitlab-account">these instructions</a></li>
+  <li>Set up an SSH connection to GitLab. First <a href="https://docs.gitlab.com/ee/user/ssh.html#see-if-you-have-an-existing-ssh-key-pair">check if you have an ssh key</a>. Then create an SSH key pair if you don't have one, please refer to <a href="https://docs.gitlab.com/ee/user/ssh.html#generate-an-ssh-key-pair">this page</a> for instructions. Then add the SSH key to your GitLab account following <a href="https://docs.gitlab.com/ee/user/ssh.html#add-an-ssh-key-to-your-gitlab-account">these instructions</a></li>. You can then verify the SSH connection by running `ssh -T git@git.wur.nl` inside your terminal (for example Git Bash). The terminal will ask: 'Are you sure you want to continue connecting'. Respond with 'yes'. If you see 'Welcome to GitLab, username' you are succesfully setup! Otherwise send an email to s.vanderburg@esciencecenter.nl and s.vanrijn@esciencecenter.nl and we will help you with your setup.
 </ul>
